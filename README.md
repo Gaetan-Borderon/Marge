@@ -55,9 +55,25 @@ L’adresse habituelle est `https://VOTRE_COMPTE.github.io/VOTRE_DEPOT/`. Utilis
 
 Ensuite, chaque envoi de modifications sur `main` ou `master` relance les tests et publie le dossier `dist/`. Si le premier lancement automatique a précédé l’activation de GitHub Pages, relancez le workflow après l’étape 2. Aucun secret GitHub à ajouter.
 
+## Planning et modèles de coûts locaux
+
+Dans l’onglet **Consultants**, chaque personne possède ses propres dates de mission, tarif de vente journalier et coût de rémunération. Le calcul retient les dates inclusives comprises dans la période du projet. Il compte le lundi au vendredi ; les jours fériés, congés et autres absences se déduisent manuellement. Les week-ends travaillés et les heures supplémentaires ont leurs champs dédiés. Saisissez les taux de vente et d’achat des heures supplémentaires ; aucun coefficient n’est supposé automatiquement.
+
+Les coûts locaux sont des modèles enregistrés dans le navigateur. Chaque poste peut être journalier, ponctuel ou réparti selon la formule `montant × quantité ÷ jours de référence`. Une case permet d’inclure ou d’exclure chaque poste, ainsi que sa TVA et sa sécurité éventuelles.
+
+Le taux de référence est exprimé en **USD pour 1 EUR**. Un taux budgétaire distinct, exprimé en **EUR pour 1 USD**, peut le remplacer pour calculer les coûts. Si la sécurité est marquée « déjà intégrée », aucune majoration n’est ajoutée. Les taux sont saisis manuellement et ne sont pas actualisés sur les marchés.
+
+Utilisez **Modèles de coûts** pour créer, copier, importer ou exporter un modèle JSON. Le modèle par défaut du projet est copié uniquement sur les nouveaux consultants. Chaque consultant conserve ensuite sa propre copie, ajustable avec **Ajuster les coûts**. Modifier ou supprimer un modèle de la bibliothèque ne modifie pas ces copies ni les anciens projets.
+
+Un lien d’import peut proposer un modèle dans le fragment de l’adresse. Il ouvre l’éditeur pour vérification ; le modèle n’est enregistré qu’après une action explicite. Le fragment est retiré de l’adresse après lecture. Les coûts personnalisés ne sont pas intégrés au code public du dépôt.
+
+Les budgets v1 et v2 sont convertis au format v3 sans changer leurs totaux. Leurs anciennes clés de stockage sont conservées.
+
 ## Fonctionnalités
 
-- Plusieurs services et produits dans un même projet, avec quantité, tarif et fréquence.
+- Consultants avec arrivées et départs décalés, tarifs individuels et heures supplémentaires.
+- Modèles de coûts locaux indépendants, exportables et réutilisables.
+- Plusieurs services et produits complémentaires dans un même projet, avec quantité, tarif et fréquence.
 - Revenus et dépenses mensuels ou ponctuels.
 - Dépenses calculées en quantité × coût unitaire ou en pourcentage du chiffre d’affaires.
 - Coûts rattachés à un service ou communs au projet.
@@ -80,9 +96,12 @@ marge/
 │   ├── index.html                     Interface et textes
 │   ├── styles.css                     Apparence et mise en page
 │   ├── app.js                         Interactions et sauvegarde
-│   └── finance.js                     Formules financières
+│   ├── finance.js                     Résultats et consolidation
+│   ├── planning.js                    Calendrier et coûts locaux
+│   └── planner-ui.js                  Planning et bibliothèque de modèles
 ├── scripts/serve.mjs                  Serveur local sans dépendance
-├── tests/finance.test.mjs             Vérifications des calculs
+├── tests/finance.test.mjs             Consolidation et budgets
+├── tests/planning.test.mjs            Dates, consultants et modèles locaux
 ├── package.json
 └── README.md
 ```
@@ -95,7 +114,7 @@ Pour modifier l’application, éditez directement les fichiers du dossier `dist
 npm test
 ```
 
-Les tests couvrent plusieurs services, les dépenses mensuelles et ponctuelles, les taxes en pourcentage, les scénarios, les contributions et la conversion des anciens budgets.
+Les tests couvrent plusieurs services et consultants, les dates inclusives et week-ends, les absences et heures supplémentaires, les frais mensuels, journaliers, répartis et ponctuels, la conversion USD/EUR, la sécurité déjà intégrée, les taxes, les scénarios, les contributions et la conversion des anciens budgets.
 
 ## Hypothèses du modèle
 
