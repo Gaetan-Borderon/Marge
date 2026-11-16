@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#174b38">
+  <meta name="description" content="Évaluez un projet avec plusieurs services, produits et dépenses détaillées : avions, logement, taxes, prestataires et salaires.">
+  <title>Marge — Voyez le potentiel de vos projets</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23174b38'/%3E%3Cpath d='M16 44V27h8v17m4 0V20h8v24m4 0V12h8v32' stroke='%23d5f2ad' stroke-width='5'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css?v=2">
+</head>
+<body>
+  <svg class="sprite" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 4v16h16M8 15l4-5 4 2 5-7"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v9H3z"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 5v15M3 4c4-1 7 0 9 2 2-2 5-3 9-2v14c-4-1-7 0-9 2-2-2-5-3-9-2z"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-4-4 4 4 4-4M4 16v5h16v-5"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24"><path d="M4 7h16l1 14H3zM8 8V6a4 4 0 0 1 8 0v2"/></symbol>
+    <symbol id="i-briefcase" viewBox="0 0 24 24"><path d="M8 6V3h8v3M3 7h18v14H3zM3 12a22 22 0 0 0 18 0M12 12v4"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7v1"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+    <symbol id="i-save" viewBox="0 0 24 24"><path d="M4 3h13l4 4v14H3V3zM7 3v7h10V3M7 21v-7h10v7"/></symbol>
+  </defs></svg>
+  <aside class="sidebar">
+    <a class="brand" href="#" aria-label="Marge, accueil"><span class="brand-icon"><i></i><i></i><i></i></span>marge<span class="brand-dot">.</span></a>
+    <p class="workspace-label">VOTRE ESPACE DE DÉCISION</p>
+    <nav aria-label="Navigation principale">
+      <a class="nav-item active" href="#simulator"><svg><use href="#i-chart"/></svg>Simulateur<span class="nav-dot"></span></a>
+      <button class="nav-item" id="projectsBtn"><svg><use href="#i-folder"/></svg>Mes projets<span class="count" id="savedCount">0</span></button>
+      <button class="nav-item" id="methodBtn"><svg><use href="#i-book"/></svg>Comprendre les calculs</button>
+    </nav>
+    <div class="sidebar-bottom"><div class="little-mark">↗</div><p>Une idée.<br>Des chiffres.<br><strong>Une décision éclairée.</strong></p><span class="local-label"><span></span>Vos données restent sur cet appareil</span></div>
+  </aside>
+  <div class="main-wrap">
+    <header class="topbar"><div class="breadcrumb">Votre espace <span>/</span> <strong>Simulateur</strong></div><div class="top-right"><span class="draft-state" id="draftState"><span></span>Brouillon enregistré</span><span class="avatar" aria-label="Espace personnel">M</span></div></header>
+    <main id="simulator">
+      <section class="page-heading"><div><div class="eyebrow"><span></span>DE L’INTUITION À LA DÉCISION</div><h1>Votre projet est-il rentable ?</h1><p>Plusieurs services. Tous vos coûts. Une vision claire du projet.</p></div><button class="button secondary new-project" id="newBtn"><svg><use href="#i-plus"/></svg>Nouveau projet</button></section>
+      <div class="project-bar"><div><span class="project-swatch"><svg><use href="#i-folder"/></svg></span><div><label for="projectName">NOM DU PROJET</label><input id="projectName" type="text" maxlength="80" value="Mon prochain projet" autocomplete="off"></div></div><button class="button save-button" id="saveBtn"><svg><use href="#i-save"/></svg><span>Enregistrer le projet</span></button></div>
+      <form id="assumptionForm" novalidate>
+        <section class="project-settings panel" aria-label="Période et investissement">
+          <div class="settings-intro"><span class="step-number">01</span><div><h2>Le cadre du projet</h2><p>Un budget commun, plusieurs sources de revenus.</p></div></div>
+          <div class="field"><label for="months">Durée du projet</label><div class="input-wrap"><input id="months" type="number" min="1" max="60" step="1" required inputmode="numeric"><span>mois</span></div></div>
+          <div class="field"><label for="investment">Mise initiale supplémentaire</label><div class="input-wrap"><input id="investment" type="number" min="0" max="100000000" step="0.01" required inputmode="decimal"><span>€</span></div></div>
+          <p class="settings-note">La mise initiale est déduite une seule fois. N’y incluez pas les dépenses déjà saisies ci-dessous.</p>
+        </section>
+        <p class="form-error" id="formError" role="alert" hidden></p>
+        <div class="workspace-grid budget-workspace">
+          <section class="panel budget-editor" aria-label="Lignes du budget">
+            <div class="budget-tabs" role="tablist" aria-label="Éléments du budget"><button type="button" id="revenuesTab" role="tab" aria-selected="true" aria-controls="revenuesPanel" tabindex="0" class="budget-tab selected">Revenus <span id="revenueCount">0</span></button><button type="button" id="expensesTab" role="tab" aria-selected="false" aria-controls="expensesPanel" tabindex="-1" class="budget-tab">Dépenses <span id="expenseCount">0</span></button></div>
+            <div id="revenuesPanel" role="tabpanel" aria-labelledby="revenuesTab" class="editor-panel">
+              <div class="editor-heading"><div><h2>Vos services et produits</h2><p>Ajoutez chaque prestation avec son propre tarif et volume.</p></div><button type="button" class="button secondary" id="addRevenueBtn"><svg><use href="#i-plus"/></svg>Ajouter</button></div>
+              <div id="revenueList" class="editor-list"></div>
+              <div class="editor-subtotal"><span>Total des revenus sur <span class="months-label">12</span> mois</span><strong id="revenueSubtotal">—</strong></div>
+            </div>
+            <div id="expensesPanel" role="tabpanel" aria-labelledby="expensesTab" class="editor-panel" hidden>
+              <div class="editor-heading"><div><h2>Toutes vos dépenses</h2><p>Une ligne par poste, pour un budget facile à vérifier.</p></div></div>
+              <div class="expense-presets" aria-label="Ajouter une dépense"><button type="button" data-category="flights">✈ Billets d’avion</button><button type="button" data-category="lodging">⌂ Logement</button><button type="button" data-category="taxes">% Taxes</button><button type="button" data-category="contractors">♧ Prestataires</button><button type="button" data-category="salaries">◉ Salaires</button><button type="button" data-category="other">+ Autres frais</button></div>
+              <div id="expenseList" class="editor-list"></div>
+              <div class="editor-subtotal"><span>Dépenses hors mise initiale</span><strong id="expenseSubtotal">—</strong></div>
+            </div>
+            <div class="form-foot"><svg><use href="#i-info"/></svg><p>Choisissez « par mois » pour une dépense récurrente et « pour le projet » pour la compter une seule fois. Les valeurs d’exemple sont à personnaliser.</p></div>
+          </section>
+          <div class="results-column" id="resultsColumn">
+            <section class="result-hero" id="resultHero" aria-live="polite" aria-atomic="true"><div class="hero-top"><span class="result-label">TOUS VOS SERVICES, UN SEUL RÉSULTAT</span><span class="status-pill" id="statusPill">Projet rentable</span></div><p class="result-caption">Résultat global sur <span id="periodLabel">12 mois</span></p><div class="result-value" id="totalResult">—</div><p class="result-explainer">Tous les revenus − toutes les dépenses − la mise initiale.</p><div class="hero-rule"></div><div class="hero-bottom"><div><span>Résultat moyen / mois</span><strong id="monthlyProfit">—</strong></div><div><span>CA minimum sur la période</span><strong id="thresholdValue">—</strong></div></div><div class="hero-decoration" aria-hidden="true"></div></section>
+            <div class="metric-grid"><div class="metric-card"><span class="metric-icon">↗</span><p>Revenus du projet</p><strong id="revenueValue">—</strong><span class="metric-note">Tous services et produits</span></div><div class="metric-card"><span class="metric-icon">↘</span><p>Coût total du projet</p><strong id="costValue">—</strong><span class="metric-note">Mise initiale incluse</span></div><div class="metric-card"><span class="metric-icon">%</span><p>Marge du projet</p><strong id="marginValue">—</strong><span class="metric-note">Après tous les coûts saisis</span></div></div>
+            <section class="panel cost-panel"><div class="chart-heading"><div><h2>Où passe votre budget ?</h2><p>Dépenses sur l’ensemble de la période</p></div><span class="small-tag">EN EUROS</span></div><div id="costBreakdown" class="cost-breakdown"></div><p id="thresholdText" class="threshold-note">—</p></section>
+            <section class="panel scenarios-panel"><div class="scenario-heading"><div><h2>Et si le volume changeait ?</h2><p>Résultat global selon l’activité prévue.</p></div></div><div class="scenarios" id="scenarios"></div><p class="scenario-note">Volumes des revenus ±20 %. Les dépenses marquées variables et les taxes en % du CA suivent l’activité. Les autres dépenses restent fixes.</p></section>
+          </div>
+        </div>
+      </form>
+      <section class="panel contributions-panel"><div class="chart-heading"><div><h2>La contribution de chaque service</h2><p>Les coûts rattachés à un service sont déduits de ses revenus.</p></div><span class="small-tag">SUR <span id="contributionMonths">12</span> MOIS</span></div><div class="table-scroll"><table class="contribution-table"><thead><tr><th scope="col">Service / produit</th><th scope="col">Revenus</th><th scope="col">Coûts rattachés</th><th scope="col">Contribution</th></tr></thead><tbody id="contributions"></tbody></table></div><div class="common-costs"><span>Coûts communs + mise initiale</span><strong id="commonCostValue">—</strong></div><p class="contribution-note">La contribution est calculée avant les coûts communs et la mise initiale. Ces derniers sont déduits une seule fois dans le résultat global.</p></section>
+      <footer class="page-footer"><span><span class="footer-mark">m.</span> Des chiffres pour avancer.</span><button id="exportBtn"><svg><use href="#i-download"/></svg>Exporter la simulation (.csv)</button></footer>
+      <p class="model-note">Projection simplifiée en euros. Montants hors TVA récupérable ; incluez la TVA non récupérable dans les coûts. Les taxes ne sont comptées que si vous les saisissez. Hors amortissements, financement et délais de paiement. Les lignes mensuelles sont répétées sur la durée choisie.</p>
+    </main>
+  </div>
+  <dialog id="projectsDialog" aria-labelledby="projectsTitle"><div class="dialog-heading"><div><p class="eyebrow">VOTRE CARNET DE PROJETS</p><h2 id="projectsTitle">Mes projets</h2></div><button class="icon-button close-dialog" aria-label="Fermer"><svg><use href="#i-close"/></svg></button></div><p class="dialog-intro">Vos simulations sont enregistrées dans ce navigateur, sur cet appareil.</p><div id="projectList"></div></dialog>
+  <dialog id="methodDialog" aria-labelledby="methodTitle"><div class="dialog-heading"><div><p class="eyebrow">POUR DÉCIDER EN CONFIANCE</p><h2 id="methodTitle">Des calculs transparents</h2></div><button class="icon-button close-dialog" aria-label="Fermer"><svg><use href="#i-close"/></svg></button></div><div class="method-content"><p>Un projet peut réunir plusieurs services et produits. Les totaux portent toujours sur la durée du projet.</p><dl><dt>Revenus de chaque ligne</dt><dd>Quantité × prix unitaire, multiplié par le nombre de mois si la ligne est mensuelle. Une ligne « pour le projet » est comptée une seule fois.</dd><dt>Dépenses détaillées</dt><dd>Quantité × coût unitaire, multiplié par la durée pour les dépenses mensuelles. Pour les salaires, saisissez le coût employeur complet. Une taxe peut aussi être saisie en pourcentage du chiffre d’affaires du projet ou d’un service.</dd><dt>Résultat global et marge</dt><dd>Total des revenus − total des dépenses − mise initiale supplémentaire. La marge est ce résultat divisé par les revenus × 100. Sans revenus, elle n’est pas définie.</dd><dt>Rattachement à un service</dt><dd>Un coût peut être affecté à un service précis ou rester commun au projet. Ce rattachement sert à calculer la contribution de chaque service ; il ne change pas le total du projet. Supprimer un service laisse ses dépenses dans le projet et les rend communes. Une dépense en % de ce service est alors convertie en montant ponctuel variable, égal à son estimation avant suppression.</dd><dt>Scénarios prudent et optimiste</dt><dd>Les quantités de toutes les lignes de revenus sont ajustées de −20 % et +20 %, avec deux décimales. Les dépenses cochées « varie avec l’activité » suivent la même variation, ainsi que les dépenses en % du CA. Les autres montants et la mise initiale restent fixes.</dd><dt>Chiffre d’affaires minimum à atteindre</dt><dd>Total des coûts fixes, mise initiale comprise, divisé par (1 − part des dépenses variables dans les revenus prévus). Estimation à répartition des revenus et taux de coûts variables constants, sans arrondi des volumes. Le seuil n’est pas calculable sans revenus de référence ou si les coûts variables absorbent tout le chiffre d’affaires.</dd><dt>Résultat moyen mensuel</dt><dd>Résultat global ÷ nombre de mois. C’est une moyenne qui inclut les frais ponctuels et la mise initiale ; elle ne décrit pas les encaissements de chaque mois.</dd></dl><div class="method-callout">Les catégories servent à organiser les dépenses. Aucun taux fiscal ou coût salarial n’est ajouté automatiquement. Saisissez toutes les taxes et charges applicables et évitez de compter deux fois une dépense dans la mise initiale et les lignes du budget.</div></div></dialog>
+  <dialog id="confirmDialog" aria-labelledby="confirmTitle"><div class="dialog-heading"><h2 id="confirmTitle">Commencer un nouveau projet ?</h2><button class="icon-button close-dialog" aria-label="Fermer"><svg><use href="#i-close"/></svg></button></div><p>Le brouillon sera remplacé par un nouveau budget vide. Enregistrez votre projet si vous souhaitez le conserver dans « Mes projets ».</p><div class="dialog-actions"><button class="button secondary close-dialog">Annuler</button><button class="button" id="confirmNewBtn">Nouveau projet</button></div></dialog>
+  <div class="toast" id="toast" role="status"></div>
+  <script type="module" src="app.js?v=2"></script>
+</body>
+</html>
