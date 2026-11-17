@@ -55,69 +55,85 @@ L’adresse habituelle est `https://VOTRE_COMPTE.github.io/VOTRE_DEPOT/`. Utilis
 
 Ensuite, chaque envoi de modifications sur `main` ou `master` relance les tests et publie le dossier `dist/`. Si le premier lancement automatique a précédé l’activation de GitHub Pages, relancez le workflow après l’étape 2. Aucun secret GitHub à ajouter.
 
-## Planning et modèles de coûts locaux
+## Parcours de pilotage (v4)
 
-Dans l’onglet **Consultants**, chaque personne possède ses propres dates de mission, tarif de vente journalier et coût de rémunération. Le calcul retient les dates inclusives comprises dans la période du projet. Il compte le lundi au vendredi ; les jours fériés, congés et autres absences se déduisent manuellement. Les week-ends travaillés et les heures supplémentaires ont leurs champs dédiés. Saisissez les taux de vente et d’achat des heures supplémentaires ; aucun coefficient n’est supposé automatiquement.
+### 1. Construire le budget et le prix par jour
 
-Les coûts locaux sont des modèles enregistrés dans le navigateur. Chaque poste peut être journalier, ponctuel ou réparti selon la formule `montant × quantité ÷ jours de référence`. Une case permet d’inclure ou d’exclure chaque poste, ainsi que sa TVA et sa sécurité éventuelles.
+Le budget de référence est établi **par consultant** sur une durée modifiable. Les jours facturables prévus sont estimés du lundi au vendredi, avec déduction des jours non facturables et ajout des jours supplémentaires. Une quantité manuelle de jours peut remplacer cette estimation.
 
-Le taux de référence est exprimé en **USD pour 1 EUR**. Un taux budgétaire distinct, exprimé en **EUR pour 1 USD**, peut le remplacer pour calculer les coûts. Si la sécurité est marquée « déjà intégrée », aucune majoration n’est ajoutée. Les taux sont saisis manuellement et ne sont pas actualisés sur les marchés.
+Saisissez le salaire net par jour et les postes de coûts locaux. Chaque poste a sa catégorie, sa devise, sa quantité et sa base : par jour facturable, par mois, ponctuel, réparti selon un nombre de jours de référence, ou en pourcentage du salaire net. Les coûts mensuels sont calculés au prorata des jours calendaires. Les coûts ponctuels peuvent avoir une date spécifique.
 
-Utilisez **Modèles de coûts** pour créer, copier, importer ou exporter un modèle JSON. Le modèle par défaut du projet est copié uniquement sur les nouveaux consultants. Chaque consultant conserve ensuite sa propre copie, ajustable avec **Ajuster les coûts**. Modifier ou supprimer un modèle de la bibliothèque ne modifie pas ces copies ni les anciens projets.
+Le **coût STAT par jour** est le coût total prévu divisé par les jours facturables. Le **prix de vente conseillé** est ce coût multiplié par `1 + majoration / 100`. Une majoration de 20 % sur coût correspond à une marge de 16,67 % sur le prix de vente. Aucun salaire brut, taux légal ou supplément fiscal n’est supposé automatiquement.
 
-Un lien d’import peut proposer un modèle dans le fragment de l’adresse. Il ouvre l’éditeur pour vérification ; le modèle n’est enregistré qu’après une action explicite. Le fragment est retiré de l’adresse après lecture. Les coûts personnalisés ne sont pas intégrés au code public du dépôt.
+Les devises, la TVA et la sécurité reprennent les possibilités de la version précédente. Le taux de référence est exprimé en USD pour 1 EUR ; le taux budgétaire en EUR pour 1 USD. La sécurité « déjà intégrée » ne s’applique pas une seconde fois.
 
-Les budgets v1 et v2 sont convertis au format v3 sans changer leurs totaux. Leurs anciennes clés de stockage sont conservées.
+### 2. Décliner le budget par consultant
 
-## Fonctionnalités
+Chaque consultant a ses dates de démarrage et de fin prévisionnelle, sa quantité de jours facturables, son salaire net ou sa majoration spécifique, son TJM vendu et ses coûts additionnels. Le tarif vendu reste fixe lorsque les coûts ou les dates changent ; un bouton permet d’adopter explicitement le prix conseillé.
 
-- Consultants avec arrivées et départs décalés, tarifs individuels et heures supplémentaires.
-- Modèles de coûts locaux indépendants, exportables et réutilisables.
-- Plusieurs services et produits complémentaires dans un même projet, avec quantité, tarif et fréquence.
-- Revenus et dépenses mensuels ou ponctuels.
-- Dépenses calculées en quantité × coût unitaire ou en pourcentage du chiffre d’affaires.
-- Coûts rattachés à un service ou communs au projet.
-- Résultat global, marge, chiffre d’affaires minimum estimé et contribution de chaque service.
-- Scénarios prudent, central et optimiste.
-- Sauvegarde locale de plusieurs projets et export CSV détaillé.
+Ajoutez ou retirez les catégories depuis **Gérer les catégories**. Retirer une catégorie conserve ses montants dans « Autres », y compris dans les références budgétaires et les dépenses déjà saisies.
 
-## Stockage des projets
+Après le paramétrage d’une mission, cliquez sur **Valider le budget**. Cette action fige une copie des hypothèses initiales. Les modifications ultérieures alimentent la prévision révisée, sans réécrire la référence. Remplacer cette référence est une action explicite avec confirmation.
 
-Les projets sont conservés dans le stockage local du navigateur (`localStorage`). Ils ne sont pas envoyés à GitHub, ne sont pas inclus dans le code et ne se synchronisent pas entre appareils.
+Les **dépenses réelles** sont saisies séparément avec date, catégorie, montant, consultant et explication. Les salaires et charges ne sont pas générés à partir des factures clients. Une dépense en USD conserve son propre taux de conversion historique. Les remboursements ou avoirs de coûts peuvent être saisis avec un montant négatif.
 
-Chaque adresse de site possède son propre stockage. Les données de l’ancien site ne sont donc pas transférées automatiquement vers GitHub Pages. L’export CSV permet de conserver un rapport détaillé ; cette version ne propose pas d’import de projet.
+Un consultant sans historique peut être retiré. S’il possède des factures ou dépenses, il est archivé pour conserver ces données ; modifiez sa date de fin si la mission se termine plus tôt.
+
+### 3. Enregistrer les factures et paiements
+
+Une facture est rattachée à **un seul consultant**. Elle contient les dates de période, les jours facturés, le tarif journalier, les heures supplémentaires et les éventuelles lignes forfaitaires ou remises. Les états sont : à envoyer, à corriger, envoyée, en attente de paiement et payée.
+
+Le CA facturé et les jours facturés proviennent uniquement des factures actuellement valides, émises au plus tard à la date d’arrêté. Les brouillons et corrections restent séparés. Le CA prévisionnel n’est jamais ajouté au CA facturé.
+
+Les paiements partiels ou complets ont leur propre date. Les montants sont suivis en **équivalent HT**, y compris pour les règlements. La date d’arrêté exclut les émissions et paiements futurs. Aucun e-mail, facture ou paiement n’est envoyé automatiquement.
+
+### Tableaux de bord par consultant
+
+La vue d’ensemble présente les prévisions, la facturation, les jours facturés, les encaissements et les coûts. Chaque consultant a un tableau de bord détaillé avec :
+
+- Coût réel saisi par jour facturé, comparé au coût budgété par jour.
+- Budget initial, prévision révisée et coûts saisis à date.
+- Courbes de coûts cumulés et suivi mensuel.
+- Première date d’écart au rythme prévu et première date de dépassement du budget total, suivies séparément.
+- Écarts par catégorie et dépenses datées avec leurs explications.
+
+Un coût payé en avance peut créer un écart de rythme sans dépassement du budget total. Les absences prévues sont réparties uniformément dans le calendrier budgétaire. Sans dépenses réelles saisies, l’interface indique que les coûts restent à documenter.
+
+## Modèles, sauvegardes et anciennes données
+
+Les budgets peuvent être conservés comme modèles, exportés et importés en JSON. Les anciens modèles de coûts locaux restent importables. Les liens d’import de modèles dans un fragment d’adresse sont conservés ; leurs données ne sont pas envoyées au dépôt.
+
+Chaque projet dispose d’une sauvegarde JSON complète et d’un export CSV comprenant consultants, budgets, factures, paiements, dépenses et écarts. Un import de sauvegarde crée une copie, sans remplacer les autres projets.
+
+Les données sont conservées dans le stockage local du navigateur. Elles ne sont pas envoyées à GitHub et ne se synchronisent pas entre appareils. La v4 utilise une nouvelle clé de stockage, sans supprimer les anciennes. L’ancienne interface reste accessible via `legacy.html`.
+
+Les missions précédentes sont reprises avec leurs coûts. Un ancien coût d’achat ou de rémunération non ventilé reste un poste explicite : il n’est pas renommé automatiquement « salaire net ». Vérifiez sa ventilation avant d’ajouter le salaire net, afin d’éviter un doublon. Les autres revenus et coûts de l’ancienne simulation restent identifiés à part.
 
 ## Modifier le code
 
 ```text
 marge/
-├── .github/workflows/deploy-pages.yml  Déploiement GitHub Pages
+├── .github/workflows/deploy-pages.yml
 ├── dist/
-│   ├── index.html                     Interface et textes
-│   ├── styles.css                     Apparence et mise en page
-│   ├── app.js                         Interactions et sauvegarde
-│   ├── finance.js                     Résultats et consolidation
-│   ├── planning.js                    Calendrier et coûts locaux
-│   └── planner-ui.js                  Planning et bibliothèque de modèles
-├── scripts/serve.mjs                  Serveur local sans dépendance
-├── tests/finance.test.mjs             Consolidation et budgets
-├── tests/planning.test.mjs            Dates, consultants et modèles locaux
+│   ├── index.html                   Interface v4
+│   ├── workspace.css                Mise en page responsive
+│   ├── workspace.js                 Écrans, saisie et stockage
+│   ├── budget-engine.js             Budget, calendrier, factures et écarts
+│   ├── legacy.html                  Accès à l’ancienne interface
+│   └── …                            Modules v3 conservés pour compatibilité
+├── scripts/serve.mjs
+├── tests/
+│   ├── budget-workspace.test.mjs     Tests du pilotage v4
+│   ├── finance.test.mjs
+│   └── planning.test.mjs
 ├── package.json
 └── README.md
 ```
 
-Pour modifier l’application, éditez directement les fichiers du dossier `dist/`. Ce dossier contient le code source du site, sans compilation ni fichiers minimisés. Le workflow ne déploie que ce dossier, pas le serveur local ni les tests.
-
-## Vérifier les calculs
+Le dossier `dist/` contient directement le code du site, sans compilation. Le workflow GitHub Pages exécute les tests puis publie ce dossier.
 
 ```sh
 npm test
 ```
 
-Les tests couvrent plusieurs services et consultants, les dates inclusives et week-ends, les absences et heures supplémentaires, les frais mensuels, journaliers, répartis et ponctuels, la conversion USD/EUR, la sécurité déjà intégrée, les taxes, les scénarios, les contributions et la conversion des anciens budgets.
-
-## Hypothèses du modèle
-
-Le résultat global est égal aux revenus moins toutes les dépenses saisies et la mise initiale supplémentaire. Une ligne mensuelle est répétée sur la durée choisie. Une ligne ponctuelle est comptée une seule fois.
-
-Les taxes et charges ne sont ajoutées que si vous les saisissez. Pour les salaires, indiquez le coût employeur complet. Les montants sont hors TVA récupérable ; incluez la TVA non récupérable dans les coûts. Le modèle ne calcule pas les amortissements, le financement ni les délais de paiement. Les formules sont également expliquées dans l’application.
+Les tests couvrent notamment les majorations sur coût, jours facturables, devises, références figées, coûts datés, catégories, statuts et dates de factures, paiements partiels, jours facturés, dépassements, rapprochements des montants et migration des anciennes données.

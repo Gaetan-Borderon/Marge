@@ -1,6 +1,6 @@
 {
   "name": "marge",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "private": true,
   "description": "Simulateur de rentabilité pour les projets réunissant plusieurs services, produits et dépenses.",
   "type": "module",
